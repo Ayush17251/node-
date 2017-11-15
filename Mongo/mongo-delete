@@ -1,0 +1,30 @@
+//const MongoClient = require('mongodb').MongoClient;
+const {MongoClient} =require('mongodb');
+// Both the above line are same
+
+MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db) => {
+  if(err) {
+    return console.log('Unable to connect to MongoDB Server');
+  }
+  console.log('connected to MongoDB Server');
+
+  //deleteMAny
+
+  db.collection('Todos').deleteMany({text: "Something to do ultra"}).then(
+    (result) => {
+      console.log(result);
+    });
+  //deleteOne : It delete the first item it sees
+  db.collection('Todos').deleteOne({text: "Something to do"}).then(
+    (result) => {
+      console.log(result);
+    });
+
+  //findOneAndDelete
+
+  db.collection('Todos').findOneAndDelete({text: "walk the dog"}).then(
+    (result) => {
+      console.log(result);
+    });
+db.close();
+});
