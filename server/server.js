@@ -16,8 +16,12 @@ io.on('connection',(socket)=>{
 
   socket.on('createMessage',(message)=>{
       console.log('createMessage',message);
-      io.emit('newMessage',{
-        from: message.from,
+      // io.emit('newMessage',{
+      //   from: message.from,
+      //   text: message.text
+      // });
+      socket.broadcast.emit('newMessage',{
+        from:message.from,
         text: message.text
       });
   });
@@ -25,10 +29,6 @@ io.on('connection',(socket)=>{
        console.log('User got Disconnected');
   });
 });
-
-
-
-
 server.listen(port,()=>{
   console.log('server is up');
 });
