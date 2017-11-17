@@ -14,7 +14,7 @@ io.on('connection',(socket)=>{
   console.log('New User connected');
 });
 
-io.on('disconnect',(socket)=>{
+io.on('disconnect',(socket)=>
   console.log('User got Disconnected');
 });
 
