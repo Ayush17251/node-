@@ -6,14 +6,7 @@
   <body>
     <p> This is chatting app </p>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-      socket.on('connect',()=>{  // first arg is event name
-        console.log('connected to Server 1');
-      });
-      socket.on('disconnect',()=>{
-        console.log('Dissconnected From Server');
-      });
+    <script src="/js/index.js">
 
     </script>
   </body>
