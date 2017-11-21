@@ -4,19 +4,24 @@
     <link rel="stylesheet" href="/css/style.css">
   </head>
 
-  <body>
-    <p> This is chatting app </p>
+  <body class="chat">
+    <div class="chat__sidebar">
+        <h3>People<h3>
+        <div id="users">
 
-    <ol id="list-message"></ol>
+        </div>
+  </div>
+  <div class=chat__main>
+    <ol id="list-message" class="chat__messages"></ol>
+    <div class="chat__footer">
+        <form id="messaging">
+          <input name="messages" type="text" placeholder="Message"> </input>
+          <button>Send</button>
+        </form>
+      <button id="send-location">Send location </button>
+    </div>
 
-
-    <form id="messaging">
-      <input name="messages" type="text" placeholder="Message"> </input>
-      <button>Send<button>
-
-    </form>
-    <button id="send-location">Send location </button>
-
+  </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/libs/jquery-3.1.0.min.js"></script>
