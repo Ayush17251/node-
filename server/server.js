@@ -4,8 +4,8 @@ const socketIo = require('socket.io');
 const http = require('http');
 const port = process.env.PORT || 3000;
 const publicpath= path.join(__dirname,'../public');
-
-const {generatemessage} = require('./utils/message');
+const request = require('request');
+const {generatemessage,generateLocationmessage} = require('./utils/message');
 //const port = process.env.PORT ||3000;
 var app = express();
 var server = http.createServer(app);
@@ -23,6 +23,15 @@ io.on('connection',(socket)=>{
       generatemessage('Admin','New user has Joined')
 
   );
+
+// request({
+//   url:`http://maps.googleapis.com/maps/api/geocode/json?latlng=${},${}&sensor=true`
+// })
+  socket.on('createlocation',(coords)=>{
+    io.emit('newLocationMessage',
+      generateLocationmessage('Admin',coords.lattitude,coords.longitude)
+    );
+  });
 
   socket.on('createMessage',(message)=>{
       console.log('createMessage',message);
