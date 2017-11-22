@@ -1,6 +1,27 @@
 // Client Side JS
 
 var socket = io();
+
+// function to autoscroll the chap application
+
+function scrollToBottom() {
+  var dop=jQuery('#list-message');
+  var newMessages=dop.children('li:last-child');
+
+
+  var clientHeight = dop.prop('clientHeight');
+  var scrollHeight = dop.prop('scrollHeight');
+  var scrollTop = dop.prop('scrollTop');
+  var newMessageHeight = newMessages.innerHeight();
+  var lastMessageHeight = newMessages.prev().innerHeight();
+
+  if(clientHeight+scrollTop+newMessageHeight+lastMessageHeight >= clientHeight) {
+    dop.scrollTop(scrollHeight);
+    // Setting the scrolltop value to scrollHeight 
+  }
+
+}
+
 socket.on('connect',function(){  // first arg is event name
   console.log('connected to Server 1');
 });
@@ -34,7 +55,7 @@ socket.on('newMessage',function(message){
   });
 
   jQuery('#list-message').append(html);
-
+  scrollToBottom();
 
   // var formattedtime=moment(message.createdAt).format('hh:mm a');
   // //console.log('newMessage',message);
@@ -53,7 +74,7 @@ socket.on('newLocationMessage',function(message) {
   });
 
     jQuery('#list-message').append(html);
-
+    scrollToBottom();
 
   // var li=jQuery('<li></li>');
   // var a= jQuery('<a target=_blank>My Current Location</a>');
