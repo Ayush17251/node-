@@ -25,17 +25,19 @@ jQuery('#messaging').on('submit',function(e){
 
 
 socket.on('newMessage',function(message){
-  console.log('newMessage',message);
+  var formattedtime=moment(message.createdAt).format('hh:mm a');
+  //console.log('newMessage',message);
   var li =jQuery('<li></li>');
-  li.text(`${message.from}: ${message.text}`);
+  li.text(`${message.from} ${formattedtime}: ${message.text}`);
   jQuery('#list-message').append(li);
 });
 
 socket.on('newLocationMessage',function(message) {
+  var formattedtime=moment(message.createdAt).format('hh:mm a');
   var li=jQuery('<li></li>');
   var a= jQuery('<a target=_blank>My Current Location</a>');
 
-  li.text(`${message.from} :`);
+  li.text(`${message.from} ${formattedtime}:`);
   a.attr('href',message.url);
   li.append(a);
   jQuery('#list-message').append(li);
