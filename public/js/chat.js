@@ -17,17 +17,44 @@ function scrollToBottom() {
 
   if(clientHeight+scrollTop+newMessageHeight+lastMessageHeight >= clientHeight) {
     dop.scrollTop(scrollHeight);
-    // Setting the scrolltop value to scrollHeight 
+    // Setting the scrolltop value to scrollHeight
   }
 
 }
 
 socket.on('connect',function(){  // first arg is event name
-  console.log('connected to Server 1');
+  var params= jQuery.deparam(window.location.search);
+  socket.emit('join',params,function(errs){
+    if(errs) {
+      alert(errs);
+      window.location.href='/'; // If error go back to home page
+    } else {
+      console.log('No error');
+    }
+  });
+  //console.log('connected to Server 1');
 });
+
+
+
   socket.on('disconnect',function(){
     console.log('Dissconnected From Server');
   });
+
+
+// Update USer List
+
+
+socket.on('updateUserList', function (users) {
+  var ol = jQuery('<ol></ol>');
+
+  users.forEach(function (user) {
+    ol.append(jQuery(`<li></li>`).text(user));
+  });
+
+  jQuery('#users').html(ol);
+});
+
 
 
 jQuery('#messaging').on('submit',function(e){
