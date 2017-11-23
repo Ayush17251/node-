@@ -25,11 +25,6 @@ io.on('connection',(socket)=>{
 // request({
 //   url:`http://maps.googleapis.com/maps/api/geocode/json?latlng=${},${}&sensor=true`
 // })
-  socket.on('createlocation',(coords)=>{
-    io.emit('newLocationMessage',
-      generateLocationmessage('Admin',coords.lattitude,coords.longitude)
-    );
-  });
 
   socket.on('join',(params,callback)=>{
     if(!isRealString(params.name) || !isRealString(params.room))
@@ -61,12 +56,24 @@ io.on('connection',(socket)=>{
 
 
   socket.on('createMessage',(message)=>{
-      console.log('createMessage',message);
-      io.emit('newMessage',
-        generatemessage(message.from,message.text)
+      //console.log('createMessage',message);
+      var user = users.getUser(socket.id);
+      if(user && isRealString(message.text))
+      io.to(user.room).emit('newMessage',
+        generatemessage(user.name,message.text)
       );
 
   });
+
+  socket.on('createlocation',(coords)=>{
+    var user = users.getUser(socket.id);
+    if(user) {
+      io.to(user.room).emit('newLocationMessage',generateLocationmessage(user.name,coords.lattitude,coords.longitude));
+    }
+  });
+
+
+
   socket.on('disconnect',()=>{
     var user = users.removeUser(socket.id);
     if(user) {
@@ -78,5 +85,5 @@ io.on('connection',(socket)=>{
 });
 
 server.listen(port,()=>{
-  console.log('server is up');
+  console.log('server is up on');
 });

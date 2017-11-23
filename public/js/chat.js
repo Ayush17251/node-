@@ -62,7 +62,6 @@ jQuery('#messaging').on('submit',function(e){
 
 
   socket.emit('createMessage',{
-    from: 'User',
     text: jQuery('[name=messages]').val()
   },function(){
 
